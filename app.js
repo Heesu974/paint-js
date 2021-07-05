@@ -2,6 +2,7 @@
 
 const canvas = document.getElementById('jsCanvas');
 const ctx = canvas.getContext('2d');
+const colors = document.getElementsByClassName('jsColor')
 
 //context의 default
 ctx.strokeStyle = '#2c2c2c';
@@ -32,7 +33,7 @@ function onMousemove(event) {
 
         //moveTo를 통해,
         //마우스 포인터가 이동하는 offset|좌표|위치로 path의 시작점을, 클릭(mousedown)이 발생할 때까지 재정의/rematching하는 작업.
-        console.log('creating path, ', x, y);
+
     } else {
         ctx.lineTo(x, y);
 
@@ -49,17 +50,13 @@ function onMousemove(event) {
 
         //lineTo에서 발생한 라인에 색을 입혀주는 작업. 
         //이제 사용자 눈에 "라인"이 보임. 
-        console.log('creating line, ', x, y);
+
 
 
     }
 
 }
 //여기서 모든 움직임을 감지하고, 라인을 만든다.
-
-function onMousedown(event) {
-    painting = true;
-}
 
 
 // canvas를 클릭하지 않고 떠다니는 행위는 path를 생성하는 행위.
@@ -68,7 +65,12 @@ function onMousedown(event) {
 //마우스를 'down' 드래그 시키면서 움직일 때 생성되는 라인은 무수히 연속되는 위의 작업(painting)에 의해 형성된다. 
 
 
+function handleColorChange(event) {
 
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
+    // 여기서 canvas 내의 라인의 색을 color로 대입하여 변경
+}
 
 
 
@@ -88,3 +90,11 @@ if (canvas) {
     //캔버스를 클릭했을 때 painting을 시작(true)해야 하고, 마우스를 떼면 painting 값은 false가 되도록. 
     canvas.addEventListener('mouseleave', stopPainting);
 }
+
+
+Array.from(colors).forEach(tomato => tomato.addEventListener('click', handleColorChange));
+// colors로부터 배열을 만들고,
+// forEach로 배열의 아이템 각각에 click 이벤트가 실행되면, handleColorChange 실행. 
+
+// 이때, 배열의 이름이 tomato인지.
+// 배열의 아이템 이름이 tomato 인지 js project 1 에서 확인합시다.
